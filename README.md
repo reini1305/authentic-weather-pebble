@@ -1,4 +1,4 @@
-# Pebble Watchface - Authentic Weather
+# Pebble Watchface - Gradient Weather
 
 Pebble Watchface written in C and Javascript, displaying the time, temperature and a honest description of the weather at the current location.
 
