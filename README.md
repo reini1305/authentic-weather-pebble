@@ -1,9 +1,21 @@
-# Pebble Watchface - Gradient Weather
+Gradient Weather
+==============
 
-Pebble Watchface written in C and Javascript, displaying the time, temperature and a honest description of the weather at the current location.
+This is the source repositor for the Pebble watchapp "Gradient Weather"
 
+The app is soon to be found in the store.
+
+<a href='https://pledgie.com/campaigns/28156'><img alt='Click here to lend your support to: Christian Reinbachers Pebble Apps and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/28156.png?skin_name=chrome' border='0' ></a>
+
+#Screenshots
 ![alt tag](screenshot.png)
 
-## Install
+#Features
+- 12/24h time
+- Shows the current and 3h weather forecast in textual form and using a color background.
 
-Download [the pbw](https://github.com/adrianchifor/authentic-weather-pebble/releases/download/1.0/AWeather.pbw) and install on the watch by clicking on the .pbw in the Android file system and opening it with the Pebble app.
+#Credits
+Credits go to adrianchifor (https://github.com/adrianchifor/authentic-weather-pebble) from which I forked this
+
+
+
