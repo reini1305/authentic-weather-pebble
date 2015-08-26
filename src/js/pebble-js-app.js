@@ -29,9 +29,9 @@ function fetchWeatherByWoeid(location, woeid) {
 
     xhrRequest(url, 'GET', function(responseText) {
         var json = JSON.parse(responseText);
-        var temperature = parseInt(json.query.results.channel[0].item.condition.temp);
-        var text = json.query.results.channel[0].item.forecast.text;
-        sendToPebble(location, temperature, text);
+        var now = parseInt(json.query.results.channel[0].item.condition.code);
+        var next =  parseInt(json.query.results.channel[0].item.forecast.code);
+        sendToPebble(now, next);
     });
 }
 
@@ -44,14 +44,13 @@ function locationError(err) {
     sendToPebble(null, null);
 }
 
-function sendToPebble(location, temperature, text) {
+function sendToPebble(now,next) {
     var dictionary = {};
 
-    if (location !== null && temperature !== null) {
+    if (now !== null && now !== null) {
         dictionary = {
-            'KEY_LOCATION' : location,
-            'KEY_TEMPERATURE': temperature,
-            'KEY_TEXT': text
+            'KEY_NOW' : now,
+            'KEY_NEXT': next
         };
     }
 
