@@ -15,7 +15,6 @@ The app is soon to be found in the store.
 - Shows the current and 3h weather forecast in textual form and using a color background.
 
 #Credits
-Credits go to adrianchifor (https://github.com/adrianchifor/authentic-weather-pebble) from which I forked this
-
+Credits go to adrianchifor (https://github.com/adrianchifor/authentic-weather-pebble) from which I forked this. And to Mathew Reiss for his incredibly simple to use dithering library (https://github.com/MathewReiss/dithering)
 
 
