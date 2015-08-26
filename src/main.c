@@ -2,6 +2,7 @@
 
 #define KEY_LOCATION 0
 #define KEY_TEMPERATURE 1
+#define KEY_TEXT 2
 
 static Window *window;
 static TextLayer *timeText;
@@ -46,14 +47,8 @@ static void loadWindow(Window *window) {
     text_layer_set_text_alignment(temperature, GTextAlignmentCenter);
     text_layer_set_text(temperature, "--\u00B0C");
 
-    fuckingText = text_layer_create(GRect(0, 104, 144, 35));
-    text_layer_set_background_color(fuckingText, GColorBlack);
-    text_layer_set_text_color(fuckingText, GColorWhite);
-    text_layer_set_font(fuckingText, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
-    text_layer_set_text_alignment(fuckingText, GTextAlignmentCenter);
-    text_layer_set_text(fuckingText, "IT'S FUCKING");
 
-    statusText = text_layer_create(GRect(0, 133, 144, 35));
+    statusText = text_layer_create(GRect(0, 104, 144, 64));
     text_layer_set_background_color(statusText, GColorBlack);
     text_layer_set_text_color(statusText, GColorWhite);
     text_layer_set_font(statusText, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
@@ -63,7 +58,6 @@ static void loadWindow(Window *window) {
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(timeText));
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(location));
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(temperature));
-    layer_add_child(window_get_root_layer(window), text_layer_get_layer(fuckingText));
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(statusText));
 }
 
@@ -89,7 +83,7 @@ static void tickHandler(struct tm *tick, TimeUnits units) {
 static void receivedCallback(DictionaryIterator *iterator, void *context) {
     static char locationBuffer[32];
     static char temperatureBuffer[8];
-    static char statusBuffer[10];
+    static char statusBuffer[20];
     static int temperatureValue;
     int weatherReceived = 0;
 
@@ -109,7 +103,7 @@ static void receivedCallback(DictionaryIterator *iterator, void *context) {
                 snprintf(temperatureBuffer, sizeof(temperatureBuffer), "%d\u00B0C",
                     temperatureValue);
 
-                if (temperatureValue <= -12) {
+                /*if (temperatureValue <= -12) {
                     strcpy(statusBuffer, "GLACIAL!");
                 } else if (temperatureValue <= -5) {
                     strcpy(statusBuffer, "ARCTIC!");
@@ -127,8 +121,12 @@ static void receivedCallback(DictionaryIterator *iterator, void *context) {
                     strcpy(statusBuffer, "HOT!");
                 } else {
                     strcpy(statusBuffer, "ROASTING!");
-                }
+                }*/
 
+                break;
+                
+            case KEY_TEXT:
+                snprintf(statusBuffer,sizeof(statusBuffer),"%s",tuple->value->cstring);
                 break;
 
             default:

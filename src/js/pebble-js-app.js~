@@ -24,14 +24,14 @@ function fetchWeather(position) {
 
 function fetchWeatherByWoeid(location, woeid) {
     var url =
-        'https://query.yahooapis.com/v1/public/yql?q=select item.condition.temp from weather.forecast where woeid=' +
+        'https://query.yahooapis.com/v1/public/yql?q=select item.condition, item.forecast from weather.forecast where woeid=' +
         woeid + ' and u="c"&format=json';
 
     xhrRequest(url, 'GET', function(responseText) {
         var json = JSON.parse(responseText);
         var temperature = parseInt(json.query.results.channel.item.condition.temp);
-
-        sendToPebble(location, temperature);
+        var text = json.query.results.channel.item.forecast.text;
+        sendToPebble(location, temperature, text);
     });
 }
 
@@ -44,13 +44,14 @@ function locationError(err) {
     sendToPebble(null, null);
 }
 
-function sendToPebble(location, temperature) {
+function sendToPebble(location, temperature, text) {
     var dictionary = {};
 
     if (location !== null && temperature !== null) {
         dictionary = {
             'KEY_LOCATION' : location,
-            'KEY_TEMPERATURE': temperature
+            'KEY_TEMPERATURE': temperature,
+            'KEY_TEXT': text
         };
     }
 
