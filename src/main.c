@@ -12,7 +12,7 @@ static TextLayer *then_layer;
 static Layer* background_layer;
 
 static GColor colors[7];
-static char *english[8] = {"cloudy","rain","snow","sun","clear","foggy","windy","then"};
+static char *english[8] = {"clouds","rain","snow","sun","clear","fog","wind","then"};
 static char *german[8] = {"Wolken","Regen","Schnee","Sonne","Klar","Nebel","Wind","dann"};
 static char **language;
 static int8_t code_mapping[48]={6,6,6,6,6,2,1,2,1,1,1,1,1,2,2,2,2,2,2,5,5,5,5,6,6,0,0,0,0,0,0,4,3,4,4,1,3,6,6,6,1,2,2,2,0,1,2,1};
