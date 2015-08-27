@@ -9,6 +9,9 @@ The app is soon to be found in the store.
 
 #Screenshots
 ![alt tag](screenshot.png)
+![alt tag](screenshot2.png)
+![alt tag](screenshot3.png)
+![alt tag](screenshot4.png)
 
 #Features
 - 12/24h time

@@ -162,8 +162,8 @@ static void init() {
     colors[2] = GColorLightGray;
     colors[3] = GColorChromeYellow;
     colors[4] = GColorPictonBlue;
-    colors[5] = GColorCeleste;
-    colors[6] = GColorCadetBlue;
+    colors[5] = GColorCadetBlue;
+    colors[6] = GColorBlue;
   
     char *sys_locale = setlocale(LC_ALL, "");
     if (strcmp("de_DE", sys_locale) == 0) {
