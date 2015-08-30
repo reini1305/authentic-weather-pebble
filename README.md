@@ -3,7 +3,7 @@ Gradient Weather
 
 This is the source repositor for the Pebble watchapp "Gradient Weather"
 
-The app is soon to be found in the store.
+The app can be found in the store: https://apps.getpebble.com/applications/55df54f2e016bd114b000058
 
 <a href='https://pledgie.com/campaigns/28156'><img alt='Click here to lend your support to: Christian Reinbachers Pebble Apps and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/28156.png?skin_name=chrome' border='0' ></a>
 
