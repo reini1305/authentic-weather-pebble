@@ -11,7 +11,9 @@ static TextLayer *next_layer;
 static TextLayer *then_layer;
 static Layer* background_layer;
 
+#ifdef PBL_COLOR
 static GColor colors[7];
+#endif
 static char *english[8] = {"clouds","rain","snow","sun","clear","fog","wind","then"};
 static char *german[8] = {"Wolken","Regen","Schnee","Sonne","Klar","Nebel","Wind","dann"};
 static char **language;
@@ -36,22 +38,26 @@ static void updateTime() {
 
 
 static void background_update_proc(Layer *layer, GContext *ctx) {
+#ifdef PBL_COLOR
     if(code_mapping[now_code] == code_mapping[next_code]) {
       graphics_context_set_fill_color(ctx,colors[code_mapping[now_code]]);
       graphics_fill_rect(ctx,GRect(0,0,144,168),0,GCornerNone);
     }
     else
       draw_smooth_gradient_rect(ctx, GRect(0,0,144,169), colors[code_mapping[now_code]], colors[code_mapping[next_code]], TOP_TO_BOTTOM);
+#endif
 }
 
 static void loadWindow(Window *window) {
     background_layer = layer_create(GRect(0,0,144,168));
+#ifdef PBL_COLOR
     layer_set_update_proc(background_layer, background_update_proc);
-
+#endif
+  window_set_background_color(window,GColorBlack);
 
     timeText = text_layer_create(GRect(0, 0, 144, 30));
     text_layer_set_background_color(timeText, GColorClear);
-    text_layer_set_text_color(timeText, GColorBlack);
+    text_layer_set_text_color(timeText, GColorWhite);
     text_layer_set_font(timeText, fonts_get_system_font(FONT_KEY_BITHAM_30_BLACK));
     text_layer_set_text_alignment(timeText, GTextAlignmentCenter);
 
@@ -67,7 +73,7 @@ static void loadWindow(Window *window) {
     text_layer_set_text_color(then_layer, GColorWhite);
     text_layer_set_font(then_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
     text_layer_set_text_alignment(then_layer, GTextAlignmentCenter);
-    text_layer_set_text(then_layer, " ");
+    text_layer_set_text(then_layer, "loading");
 
     next_layer = text_layer_create(GRect(0, 168-50, 144, 50));
     text_layer_set_background_color(next_layer, GColorClear);
@@ -76,7 +82,9 @@ static void loadWindow(Window *window) {
     text_layer_set_text_alignment(next_layer, GTextAlignmentCenter);
     text_layer_set_text(next_layer, " ");
 
+#ifdef PBL_COLOR
     layer_add_child(window_get_root_layer(window), background_layer);
+#endif
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(timeText));
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(now_layer));
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(then_layer));
@@ -114,7 +122,7 @@ static void receivedCallback(DictionaryIterator *iterator, void *context) {
         switch (tuple->key) {
 
             case KEY_NOW:
-                text_layer_set_text_color(timeText, GColorWhite);
+            
                 now_code = (int)tuple->value->int32;
                 snprintf(nowBuffer, sizeof(nowBuffer), "%s",
                     language[code_mapping[now_code]]);
@@ -156,7 +164,7 @@ static void init() {
         .load = loadWindow,
         .unload = unloadWindow
     });
-  
+#ifdef PBL_COLOR
     colors[0] = GColorBabyBlueEyes;
     colors[1] = GColorIndigo;
     colors[2] = GColorLightGray;
@@ -164,7 +172,7 @@ static void init() {
     colors[4] = GColorPictonBlue;
     colors[5] = GColorCadetBlue;
     colors[6] = GColorBlue;
-  
+#endif
     char *sys_locale = setlocale(LC_ALL, "");
     if (strcmp("de_DE", sys_locale) == 0) {
       language = german;
