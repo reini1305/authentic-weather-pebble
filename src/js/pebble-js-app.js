@@ -12,13 +12,17 @@ function fetchWeather(position) {
     var url =
         'https://query.yahooapis.com/v1/public/yql?q=select city, woeid from geo.placefinder where text="' +
         position.coords.latitude + ',' + position.coords.longitude + '" and gflags="R"&format=json';
-
+	console.log(position.coords.latitude);
+	console.log(position.coords.longitude);
     xhrRequest(url, 'GET', function(responseText) {
         var json = JSON.parse(responseText);
-        var location = json.query.results.Result.city;
-        var woeid = json.query.results.Result.woeid;
-
-        fetchWeatherByWoeid(location, woeid);
+        if(json.query.results != null) {
+            var location = json.query.results.Result.city;
+        	var woeid = json.query.results.Result.woeid;
+			fetchWeatherByWoeid(location, woeid);
+        } 
+        else
+        	sendToPebble(48,48);
     });
 }
 

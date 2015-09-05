@@ -12,12 +12,12 @@ static TextLayer *then_layer;
 static Layer* background_layer;
 
 #ifdef PBL_COLOR
-static GColor colors[7];
+static GColor colors[9];
 #endif
-static char *english[8] = {"clouds","rain","snow","sun","clear","fog","wind","then"};
-static char *german[8] = {"Wolken","Regen","Schnee","Sonne","Klar","Nebel","Wind","dann"};
+static char *english[9] = {"clouds","rain","snow","sun","clear","fog","wind","then","??"};
+static char *german[9] = {"Wolken","Regen","Schnee","Sonne","Klar","Nebel","Wind","dann","??"};
 static char **language;
-static int8_t code_mapping[48]={6,6,6,6,6,2,1,2,1,1,1,1,1,2,2,2,2,2,2,5,5,5,5,6,6,0,0,0,0,0,0,4,3,4,4,1,3,6,6,6,1,2,2,2,0,1,2,1};
+static int8_t code_mapping[50]={6,6,6,6,6,2,1,2,1,1,1,1,1,2,2,2,2,2,2,5,5,5,5,6,6,0,0,0,0,0,0,4,3,4,4,1,3,6,6,6,1,2,2,2,0,1,2,1,8};
 static int now_code=0;
 static int next_code=0;
 
@@ -172,6 +172,8 @@ static void init() {
     colors[4] = GColorPictonBlue;
     colors[5] = GColorCadetBlue;
     colors[6] = GColorBlue;
+    colors[7] = GColorBlack;
+    colors[8] = GColorBlue;
 #endif
     char *sys_locale = setlocale(LC_ALL, "");
     if (strcmp("de_DE", sys_locale) == 0) {
