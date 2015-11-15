@@ -716,56 +716,13 @@ void draw_dithered_mask(uint8_t *bitmap_data, int bytes_per_row, GRect bounds, G
 	}
 }
 
-/*********************** Drawing dithered text *********************/ 
-
-// draws dithered text  
-// First 6 params same as for "graphics_draw_text"
-// background color: pass color of the background
-// first_color, second_color, percentage, same as for draw_dithered_rect
-void draw_dithered_text(GContext *ctx, const char * text, GFont font, GRect bounds, GTextOverflowMode overflow_mode, GTextAlignment alignment, GTextLayoutCacheRef layout, 
-                        GColor background_color, 
-                        GColor first_color, GColor second_color, DitherPercentage percentage){
-  
-  // initially drawing text in inverted color
-  GColor mask_color = color_inverted(background_color);
-  graphics_context_set_text_color(ctx, mask_color);
-  graphics_draw_text(ctx, text, font, bounds, overflow_mode, alignment, layout);
-  
-  //capturing framebuffer bitmap
-  GBitmap *fb = graphics_capture_frame_buffer(ctx);
-  uint8_t *bitmap_data =  gbitmap_get_data(fb);
-  int bytes_per_row = gbitmap_get_bytes_per_row(fb);
-
-  //drawing dithered mask over text 
-  draw_dithered_mask(bitmap_data, bytes_per_row, bounds, first_color, second_color, mask_color, percentage);
-  
-  //releasing framebuffer
-  graphics_release_frame_buffer(ctx, fb);
-  
-}  
-
-// draws dithered text from RGB colors
-// First 6 params same as for "graphics_draw_text"
-// background color: pass color of the background
-// r, g, b - colors to mix
-void draw_dithered_text_from_RGB(GContext *ctx, const char * text, GFont font, GRect bounds, GTextOverflowMode overflow_mode, GTextAlignment alignment, GTextLayoutCacheRef layout, 
-                                 GColor background_color, 
-                                 int r, int g, int b){
-	
-  GColor first = getFirstGColorFromRGB(r, g, b);
-	GColor second = getSecondGColorFromRGB(r, g, b);
-	DitherPercentage recommended = getRecommendedDitherPercentage(r, g, b, first, second);
-	
-	draw_dithered_text(ctx, text, font, bounds, overflow_mode, alignment, layout, background_color, first, second, recommended);
-}
-
 #endif
 	
 //=========================================================================================================================
 // SMOOTH GRADIENTS (Morris Timm)
 //=========================================================================================================================
 	
-#ifdef PBL_PLATFORM_BASALT
+#ifdef PBL_COLOR
 
 #define CHANNEL_DISTANCE(X, Y) ((X)>(Y)?(X)-(Y):(Y)-(X))
 

@@ -14,6 +14,15 @@ static Layer* background_layer;
 #ifdef PBL_COLOR
 static GColor colors[9];
 #endif
+#ifdef PBL_ROUND
+#define OFFSET_TOP 3
+#define OFFSET_BOTTOM 65
+#define OFFSET_MIDDLE 68
+#else
+#define OFFSET_TOP 0
+#define OFFSET_BOTTOM 20
+#define OFFSET_MIDDLE 72
+#endif
 static char *english[9] = {"clouds","rain","snow","sun","clear","fog","wind","then","??"};
 static char *german[9] = {"Wolken","Regen","Schnee","Sonne","Klar","Nebel","Wind","dann","??"};
 static char **language;
@@ -41,41 +50,42 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
 #ifdef PBL_COLOR
     if(code_mapping[now_code] == code_mapping[next_code]) {
       graphics_context_set_fill_color(ctx,colors[code_mapping[now_code]]);
-      graphics_fill_rect(ctx,GRect(0,0,144,168),0,GCornerNone);
+      graphics_fill_rect(ctx,layer_get_bounds(layer),0,GCornerNone);
     }
     else
-      draw_smooth_gradient_rect(ctx, GRect(0,0,144,169), colors[code_mapping[now_code]], colors[code_mapping[next_code]], TOP_TO_BOTTOM);
+      draw_smooth_gradient_rect(ctx, layer_get_bounds(layer), colors[code_mapping[now_code]], colors[code_mapping[next_code]], TOP_TO_BOTTOM);
 #endif
 }
 
 static void loadWindow(Window *window) {
-    background_layer = layer_create(GRect(0,0,144,168));
+  GRect bounds = layer_get_bounds(window_get_root_layer(window));
+    background_layer = layer_create(bounds);
 #ifdef PBL_COLOR
     layer_set_update_proc(background_layer, background_update_proc);
 #endif
   window_set_background_color(window,GColorBlack);
 
-    timeText = text_layer_create(GRect(0, 0, 144, 30));
+    timeText = text_layer_create(GRect(0, OFFSET_TOP, bounds.size.w, 30));
     text_layer_set_background_color(timeText, GColorClear);
     text_layer_set_text_color(timeText, GColorWhite);
     text_layer_set_font(timeText, fonts_get_system_font(FONT_KEY_BITHAM_30_BLACK));
     text_layer_set_text_alignment(timeText, GTextAlignmentCenter);
 
-    now_layer = text_layer_create(GRect(0, 27, 144, 50));
+    now_layer = text_layer_create(GRect(0, OFFSET_TOP + 27, bounds.size.w, 50));
     text_layer_set_background_color(now_layer, GColorClear);
     text_layer_set_text_color(now_layer, GColorWhite);
     text_layer_set_font(now_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
     text_layer_set_text_alignment(now_layer, GTextAlignmentCenter);
     text_layer_set_text(now_layer, " ");
   
-    then_layer = text_layer_create(GRect(0, 72, 144, 50));
+    then_layer = text_layer_create(GRect(0, OFFSET_TOP + OFFSET_MIDDLE, bounds.size.w, 50));
     text_layer_set_background_color(then_layer, GColorClear);
     text_layer_set_text_color(then_layer, GColorWhite);
     text_layer_set_font(then_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
     text_layer_set_text_alignment(then_layer, GTextAlignmentCenter);
     text_layer_set_text(then_layer, "loading");
 
-    next_layer = text_layer_create(GRect(0, 168-50, 144, 50));
+    next_layer = text_layer_create(GRect(0, bounds.size.h-OFFSET_BOTTOM, bounds.size.w, 50));
     text_layer_set_background_color(next_layer, GColorClear);
     text_layer_set_text_color(next_layer, GColorWhite);
     text_layer_set_font(next_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
