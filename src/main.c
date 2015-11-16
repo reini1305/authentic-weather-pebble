@@ -20,7 +20,7 @@ static GColor colors[9];
 #define OFFSET_MIDDLE 68
 #else
 #define OFFSET_TOP 0
-#define OFFSET_BOTTOM 20
+#define OFFSET_BOTTOM 50
 #define OFFSET_MIDDLE 72
 #endif
 static char *english[9] = {"clouds","rain","snow","sun","clear","fog","wind","then","??"};
