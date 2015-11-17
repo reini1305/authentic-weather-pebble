@@ -11,7 +11,7 @@ The app can be found in the store: https://apps.getpebble.com/applications/55df5
 ![alt tag](screenshot.png)
 ![alt tag](screenshot2.png)
 ![alt tag](screenshot3.png)
-![alt tag](screenshot4.png)
+![alt tag](screenshot5.png)
 
 #Features
 - 12/24h time
