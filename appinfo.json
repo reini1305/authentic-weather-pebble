@@ -16,8 +16,8 @@
   "sdkVersion": "3",
   "shortName": "GWeather",
   "uuid": "bec37192-5c1b-430d-bb49-dcc2ce7c272f",
-  "versionCode": 5,
-  "versionLabel": "1.4",
+  "versionCode": 6,
+  "versionLabel": "1.5",
   "watchapp": {
     "watchface": true
   },
