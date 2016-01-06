@@ -1,5 +1,6 @@
 #include <pebble.h>
 #include "dithered_rects.h"
+#include "nightstand.h"
 
 #define KEY_NOW 0
 #define KEY_NEXT 1
@@ -110,6 +111,7 @@ static void unloadWindow(Window *window) {
 }
 
 static void tickHandler(struct tm *tick, TimeUnits units) {
+  if(!nightstand_window_update()) {
     updateTime();
 
     if (tick->tm_min % 15 == 0) {
@@ -119,6 +121,7 @@ static void tickHandler(struct tm *tick, TimeUnits units) {
         app_message_outbox_send();
         layer_mark_dirty(background_layer);
     }
+  }
 }
 
 static void receivedCallback(DictionaryIterator *iterator, void *context) {
@@ -174,6 +177,7 @@ static void init() {
         .load = loadWindow,
         .unload = unloadWindow
     });
+  nightstand_window_init();
 #ifdef PBL_COLOR
     colors[0] = GColorBabyBlueEyes;
     colors[1] = GColorIndigo;
@@ -207,6 +211,7 @@ static void init() {
 
 static void deinit() {
     window_destroy(window);
+  nightstand_window_deinit();
 }
 
 int main(void) {
