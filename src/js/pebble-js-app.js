@@ -9,24 +9,24 @@ var xhrRequest = function (url, type, callback) {
 };
 
 function fetchWeather(position) {
-    var url =
-        'https://query.yahooapis.com/v1/public/yql?q=select city, woeid from geo.placefinder where text="' +
-        position.coords.latitude + ',' + position.coords.longitude + '" and gflags="R"&format=json';
+    var query = 'select locality1 from geo.places where text="(' +
+        position.coords.latitude + ',' + position.coords.longitude + ')" limit 1';
+    var url ='https://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent(query) + ';&format=json';
 	console.log(position.coords.latitude);
 	console.log(position.coords.longitude);
+	//console.log(url);
     xhrRequest(url, 'GET', function(responseText) {
         var json = JSON.parse(responseText);
-        if(json.query.results != null) {
-            var location = json.query.results.Result.city;
-        	var woeid = json.query.results.Result.woeid;
-			fetchWeatherByWoeid(location, woeid);
+        if(json.query != null) {
+        	var woeid = json.query.results.place.locality1.woeid;
+			fetchWeatherByWoeid(woeid);
         } 
         else
         	sendToPebble(48,48);
     });
 }
 
-function fetchWeatherByWoeid(location, woeid) {
+function fetchWeatherByWoeid(woeid) {
     var url =
         'https://query.yahooapis.com/v1/public/yql?q=select item.condition, item.forecast from weather.forecast where woeid=' +
         woeid + ' and u="c"&format=json';

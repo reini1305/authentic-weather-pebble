@@ -111,7 +111,7 @@ static void unloadWindow(Window *window) {
 }
 
 static void tickHandler(struct tm *tick, TimeUnits units) {
-  if(!nightstand_window_update()) {
+//  if(!nightstand_window_update()) {
     updateTime();
 
     if (tick->tm_min % 15 == 0) {
@@ -121,7 +121,7 @@ static void tickHandler(struct tm *tick, TimeUnits units) {
         app_message_outbox_send();
         layer_mark_dirty(background_layer);
     }
-  }
+//  }
 }
 
 static void receivedCallback(DictionaryIterator *iterator, void *context) {
