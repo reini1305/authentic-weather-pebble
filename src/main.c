@@ -1,6 +1,6 @@
 #include <pebble.h>
 #include "dithered_rects.h"
-#include "nightstand.h"
+#include <nightstand/nightstand.h>
 
 #define KEY_NOW 0
 #define KEY_NEXT 1
@@ -78,7 +78,7 @@ static void loadWindow(Window *window) {
     text_layer_set_font(now_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
     text_layer_set_text_alignment(now_layer, GTextAlignmentCenter);
     text_layer_set_text(now_layer, " ");
-  
+
     then_layer = text_layer_create(GRect(0, OFFSET_TOP + OFFSET_MIDDLE, bounds.size.w, 50));
     text_layer_set_background_color(then_layer, GColorClear);
     text_layer_set_text_color(then_layer, GColorWhite);
@@ -100,7 +100,7 @@ static void loadWindow(Window *window) {
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(now_layer));
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(then_layer));
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(next_layer));
-  
+
     updateTime();
 }
 
@@ -135,13 +135,13 @@ static void receivedCallback(DictionaryIterator *iterator, void *context) {
         switch (tuple->key) {
 
             case KEY_NOW:
-            
+
                 now_code = (int)tuple->value->int32;
                 snprintf(nowBuffer, sizeof(nowBuffer), "%s",
                     language[code_mapping[now_code]]);
 
                 break;
-                
+
             case KEY_NEXT:
                 next_code = (int)tuple->value->int32;
                 snprintf(nextBuffer, sizeof(nextBuffer), "%s",
