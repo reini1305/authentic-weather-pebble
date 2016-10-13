@@ -13,16 +13,22 @@ static TextLayer *then_layer;
 static Layer* background_layer;
 
 #ifdef PBL_COLOR
-static GColor colors[9];
+  static GColor colors[9];
 #endif
 #ifdef PBL_ROUND
-#define OFFSET_TOP 3
-#define OFFSET_BOTTOM 65
-#define OFFSET_MIDDLE 68
+  #define OFFSET_TOP 3
+  #define OFFSET_BOTTOM 65
+  #define OFFSET_MIDDLE 68
 #else
-#define OFFSET_TOP 0
-#define OFFSET_BOTTOM 50
-#define OFFSET_MIDDLE 72
+  #ifdef PBL_PLATFORM_EMERY
+    #define OFFSET_TOP 0
+    #define OFFSET_BOTTOM 70
+    #define OFFSET_MIDDLE 92
+  #else
+    #define OFFSET_TOP 0
+    #define OFFSET_BOTTOM 50
+    #define OFFSET_MIDDLE 72
+  #endif
 #endif
 static char *english[9] = {"clouds","rain","snow","sun","clear","fog","wind","then","??"};
 static char *german[9] = {"Wolken","Regen","Schnee","Sonne","Klar","Nebel","Wind","dann","??"};
